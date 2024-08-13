@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="ad30e32a-6688-4447-ae70-a4faaf070098">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="MaKH" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select * from CUSTOMER where IDCUS = $P{MaKH};]]>
+	</queryString>
+	<field name="IDCUS" class="java.lang.String"/>
+	<field name="NAME" class="java.lang.String"/>
+	<field name="EMAIL" class="java.lang.String"/>
+	<field name="ADDRESS" class="java.lang.String"/>
+	<field name="BIRTHYEAR" class="java.lang.Integer"/>
+	<field name="PHONE" class="java.lang.String"/>
+	<field name="DIEMTHUONG" class="java.lang.Double"/>
+	<title>
+		<band height="264" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="0" width="595" height="264" backcolor="#CCCCCC" uuid="3df37f14-cc00-43a9-8629-7ac8f8c0f92f"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</rectangle>
+			<line>
+				<reportElement x="26" y="53" width="493" height="1" uuid="e8ce9d71-5e52-4d31-8723-930f7ab67f6c"/>
+			</line>
+			<staticText>
+				<reportElement x="119" y="17" width="275" height="37" uuid="0a78879e-7b5c-48c7-9b3c-d083695b20a7"/>
+				<textElement textAlignment="Center">
+					<font fontName="Arial" size="28" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Thẻ Thành Viên]]></text>
+			</staticText>
+			<image>
+				<reportElement x="26" y="66" width="93" height="116" uuid="eb0e80a1-383b-4899-ab25-28566b17a7e5"/>
+				<imageExpression><![CDATA["C:\\DoAnJava\\QL_CaPhe\\QL_CaPhe\\QL_CaPhe\\src\\Image\\cong.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="171" y="102" width="100" height="20" uuid="b9aa391c-d5d3-4148-8eba-8c0ddc7d5e35"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tên Khách Hàng :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="172" y="69" width="100" height="20" uuid="bc017957-77b6-483c-8e1e-3e2a8cdb25e5"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Số Thẻ :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="134" width="100" height="20" uuid="e0ef13d2-417f-4b8d-a6ef-f817355d7d6e"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Địa Chỉ :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="170" width="106" height="20" uuid="70fba5e3-bf56-4931-8ead-f65c498bf219"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Năm Sinh :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="169" y="201" width="100" height="20" uuid="39047845-8a5e-4e30-ac9d-5baace382bc5"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Số Điện Thoại :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="275" y="69" width="270" height="20" uuid="d09e0874-7349-4b63-99cb-802d662fb826"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{IDCUS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="272" y="102" width="273" height="20" uuid="a5385442-8879-4eb9-8afb-89f897112c69"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{NAME}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="269" y="134" width="276" height="20" uuid="46525a51-74f6-4ef9-90b5-681d21d766b8"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ADDRESS}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="275" y="170" width="270" height="20" uuid="d3770f67-36d9-4a58-aba3-e52d06ec3390"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BIRTHYEAR}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="271" y="201" width="274" height="20" uuid="9bf961fe-f3cb-406a-a3ef-c17848c9dfaa"/>
+				<textElement>
+					<font fontName="Arial" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{PHONE}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="34" y="173" width="85" height="75" uuid="6c430240-78fc-4f8b-8f61-432663542848"/>
+				<imageExpression><![CDATA["C:\\DoAnJava\\QL_CaPhe\\QL_CaPhe\\QL_CaPhe\\src\\Image\\qr.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+</jasperReport>

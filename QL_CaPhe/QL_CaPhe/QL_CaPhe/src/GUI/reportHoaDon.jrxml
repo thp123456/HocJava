@@ -1,0 +1,334 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report name" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="f2875c25-7fd1-4475-bb82-78a16b138026">
+	<property name="ireport.zoom" value="1.6105100000000008"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="306"/>
+	<style name="disCountPrice">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{productgiam} > 0.00]]></conditionExpression>
+			<style forecolor="#000000" fontName="Tahoma" fontSize="12" isBold="true"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{productgiam} <= 0.00]]></conditionExpression>
+			<style forecolor="#FFFFFF" backcolor="#000000" fontName="Tahoma" fontSize="12" isBold="true"/>
+		</conditionalStyle>
+	</style>
+	<style name="disCountToTal">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{productgiam} > 0.00]]></conditionExpression>
+			<style fontName="Tahoma" fontSize="12" isBold="true" isStrikeThrough="true"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{productgiam} <= 0.00]]></conditionExpression>
+			<style fontName="Tahoma" fontSize="12" isBold="true" isStrikeThrough="false"/>
+		</conditionalStyle>
+	</style>
+	<style name="Price">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{billgiam} > 0.00]]></conditionExpression>
+			<style forecolor="#000000" fontName="Tahoma" fontSize="12" isBold="true"/>
+		</conditionalStyle>
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$F{billgiam} <= 0.00]]></conditionExpression>
+			<style forecolor="#FFFFFF" backcolor="#000000" fontName="Tahoma" fontSize="12" isBold="true"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="MaHoaDon" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="TienKhachDua" class="java.lang.Double">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT 
+    E.NAME AS EmployeeName,
+    P.NAME AS ProductName,
+    BD.COUNT AS Quantity,
+    P.PRICE AS UnitPrice,
+    BD.TOTAL,
+	 RIGHT(REPLICATE('0', 9) + CAST(B.IDBILL AS VARCHAR(9)), 9) AS BillNumber,
+	BD.TOTAL *(1 - BD.DISCOUNT/100) as discountProduct,
+	p.PRICE  *(1 - BD.DISCOUNT/100) as discountPrice,
+    	B.BILLDATE AS BillDate,
+    	B.TOTALPRICE AS TotalBillPrice,
+	K.IDCUS as CustomerID,
+	K.NAME as CustomerName,
+	B.TOTALPRICE - B.DISCOUNT as discountBill,
+	B.DISCOUNT as billgiam,
+	BD.DISCOUNT as productgiam
+
+FROM 
+    BILL B
+JOIN 
+    BILLDETAILS BD ON B.IDBILL = BD.IDBILL
+JOIN 
+    EMPLOYEES E ON B.IDEMP = E.IDEMP
+JOIN 
+    PRODUCT P ON BD.IDPRODUCT = P.IDPRODUCT
+JOIN 
+    CUSTOMER K ON B.IDCUS = K.IDCUS
+WHERE B.IDBILL =  $P{MaHoaDon};]]>
+	</queryString>
+	<field name="EmployeeName" class="java.lang.String"/>
+	<field name="ProductName" class="java.lang.String"/>
+	<field name="Quantity" class="java.lang.Integer"/>
+	<field name="UnitPrice" class="java.lang.Double"/>
+	<field name="TOTAL" class="java.lang.Double"/>
+	<field name="BillNumber" class="java.lang.String"/>
+	<field name="discountProduct" class="java.lang.Double"/>
+	<field name="discountPrice" class="java.lang.Double"/>
+	<field name="BillDate" class="java.sql.Date"/>
+	<field name="TotalBillPrice" class="java.lang.Double"/>
+	<field name="CustomerID" class="java.lang.String"/>
+	<field name="CustomerName" class="java.lang.String"/>
+	<field name="discountBill" class="java.lang.Double"/>
+	<field name="billgiam" class="java.lang.Double"/>
+	<field name="productgiam" class="java.lang.Double"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="0" width="555" height="20" uuid="0f6048d2-74dd-4f49-aed1-bf966d1993c8"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="14" isBold="true" isStrikeThrough="false"/>
+				</textElement>
+				<text><![CDATA[PHIẾU THANH TOÁN COFFEE]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="20" width="555" height="13" uuid="50a1ebab-4772-4f08-840a-3579d36f40b1"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[www.coffeeticos.com]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="33" width="555" height="16" uuid="569f50ca-9157-4b76-bf90-32abe2542f12"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma"/>
+				</textElement>
+				<text><![CDATA[406, Phan Văn Trị, Phường 10, Quận Gò Vấp]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="69" splitType="Stretch">
+			<staticText>
+				<reportElement x="75" y="20" width="92" height="20" uuid="73aeb78f-21cf-4c94-8973-04779c2a8d70"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tên Nhân Viên :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="167" y="20" width="100" height="20" uuid="392c0c7c-5244-4541-b170-c6b548b714f6"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{EmployeeName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="75" y="40" width="82" height="20" uuid="cb3c5340-bfe8-4ff2-8274-fbc21d94cd1a"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Ngày Tạo :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="167" y="40" width="100" height="20" uuid="e960c1c4-4496-4a97-a4c7-618498de94ff"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BillDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="75" y="0" width="92" height="20" uuid="c339e89b-4fc2-4a58-ba7e-fffd4e26f70c"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Số Hóa Đơn]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="167" y="0" width="100" height="20" uuid="f27a83dd-5548-4bd2-8c33-d99e264bdfd1"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{BillNumber}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="281" y="0" width="104" height="20" uuid="cbf92165-5f04-4bc2-8ec4-45c690dbda31"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Số Thẻ Thành Viên: ]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="281" y="20" width="92" height="20" uuid="5d38d0d3-fd0e-4422-9f9e-e1b03762d162"/>
+				<textElement>
+					<font fontName="Tahoma" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tên Thành Viên: ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="385" y="0" width="100" height="20" uuid="0aac022e-1ed2-4b4d-9aa9-061738d863d0"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CustomerID}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="373" y="20" width="100" height="20" uuid="df5a1b63-cea6-4d97-adb2-ec61201be1f5"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{CustomerName}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<line>
+				<reportElement x="0" y="58" width="555" height="1" uuid="fde61ce9-7706-48c0-9d88-0ee4f5f98d6c"/>
+			</line>
+			<line>
+				<reportElement x="0" y="16" width="555" height="1" uuid="8164dfe1-143e-4143-94fa-7408aaf145a0"/>
+			</line>
+			<staticText>
+				<reportElement x="0" y="26" width="202" height="20" uuid="7f0e386f-36e7-4571-ba88-dc301f49aa3f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tên Sản Phẩm]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="202" y="26" width="109" height="20" uuid="99d210d6-c47d-49e6-9355-7c7ef1fba633"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Giá Bán]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="311" y="26" width="109" height="20" uuid="73ecc461-f82c-4119-9cce-5c5abfda7e03"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Số Lượng]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="420" y="26" width="109" height="20" uuid="fd38c160-7fdb-40a4-b22d-285c2e4666ef"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Thành Tiền]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="48" splitType="Stretch">
+			<textField>
+				<reportElement x="0" y="0" width="202" height="20" uuid="2f261927-e24f-40d9-ba61-180e6856c9ab"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{ProductName}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="47" width="555" height="1" uuid="fab5abaf-96d6-49e1-aeb3-326724188f61"/>
+			</line>
+			<textField>
+				<reportElement x="311" y="0" width="109" height="20" uuid="5d118cce-d760-40fd-992a-1c5e6fabba17"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Quantity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="disCountPrice" x="202" y="20" width="109" height="20" uuid="8388d6d8-763a-4073-91f2-a10e2f5f3494"/>
+				<textFieldExpression><![CDATA[$F{discountPrice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="disCountPrice" x="420" y="20" width="109" height="20" uuid="d66a490d-6a9a-424f-8661-394f9f195089"/>
+				<textFieldExpression><![CDATA[$F{discountProduct}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="disCountToTal" x="202" y="0" width="109" height="20" uuid="79e86327-d6a5-4ec8-8260-df4bf9acbfbc"/>
+				<textFieldExpression><![CDATA[$F{UnitPrice}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement style="disCountToTal" x="420" y="0" width="109" height="20" uuid="f4517274-eec8-4fb3-8711-8c43e0255a80"/>
+				<textFieldExpression><![CDATA[$F{TOTAL}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="1" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="170" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="99" width="555" height="20" uuid="231f53ce-be09-4933-b18b-bcede8b7e39c"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[( Giá Bán trên đã bao gồm thuế giá GTGT )]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="119" width="555" height="17" uuid="b87301a7-53b3-456b-b98a-70ed9ed9f768"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Lưu ý : Coffee Ticos Chỉ Xuất Hóa Đơn Và Hỗ Trợ Đổi Trả Hàng Trong Ngày!]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="153" width="555" height="17" uuid="2403a21d-a142-443f-92f8-50fffe08c34d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Hẹn Gặp Lại !]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="136" width="555" height="17" uuid="724c23bf-2aa7-4a1a-b591-01108bcff9fb"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Xin Cảm Ơn Quý Khách]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="320" y="20" width="100" height="20" uuid="495e61a8-2008-4c47-b966-a021749cf5cf"/>
+				<textElement>
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[( Đã làm tròn ) ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="432" y="0" width="109" height="20" uuid="b0f8793e-7fd6-459b-8382-6870014e378d"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12" isBold="true" isStrikeThrough="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{TotalBillPrice}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="311" y="0" width="121" height="20" uuid="f076549f-2d0b-4be5-abbc-9b6ade51473f"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Tổng Thành Tiền :]]></text>
+			</staticText>
+			<textField>
+				<reportElement style="disCountPrice" x="432" y="20" width="109" height="20" uuid="8170d7b7-d7e6-4c42-b2a0-b51ea6840040"/>
+				<textElement textAlignment="Center">
+					<font fontName="Tahoma" size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{discountBill}]]></textFieldExpression>
+			</textField>
+			<image>
+				<reportElement x="221" y="40" width="75" height="59" uuid="5e2cbb3b-a66b-4b02-a0ab-858d570519bf"/>
+				<imageExpression><![CDATA["C:\\DoAnJava\\QL_CaPhe\\QL_CaPhe\\QL_CaPhe\\src\\Image\\qr.jpg"]]></imageExpression>
+			</image>
+		</band>
+	</summary>
+</jasperReport>
